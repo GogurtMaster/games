@@ -9,6 +9,9 @@ pygame.init()
 screen = pygame.display.set_mode((600,600))
 pygame.display.set_caption("ship shoot")
 
+image = pygame.image.load("ufo.png").convert_alpha()
+
+
 
 food_color = (255, 0, 0)
 food_x = 300
@@ -36,13 +39,24 @@ while running:
 
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_a] and ship_x != 0:
-        ship_x -= .25
-    if keys[pygame.K_d] and ship_x != 580:
-        ship_x += .25
+
+    if keys[pygame.K_a]:
+        if ship_x > 0:
+            if keys[pygame.K_LSHIFT]:
+                ship_x -= 0.4
+            else:
+                ship_x -= 0.25
+
+    if keys[pygame.K_d]:
+        if ship_x < 580:
+            if keys[pygame.K_LSHIFT]:
+                ship_x += 0.4
+            else:
+                ship_x += 0.25
+
     
 
-    pygame.draw.rect(screen, ship_color, (ship_x, ship_y, ship_size, ship_size))
+    screen.blit(image, (ship_x, ship_y))
     pygame.draw.rect(screen, food_color, (food_x, food_y, ship_size, ship_size))
 
     pygame.draw.line(screen, (255, 255, 255), (0, 20), (800, 20), 2)
